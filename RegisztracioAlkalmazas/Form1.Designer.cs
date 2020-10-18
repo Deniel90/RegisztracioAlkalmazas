@@ -147,6 +147,7 @@
             this.listBox_kedvenchobbik.Name = "listBox_kedvenchobbik";
             this.listBox_kedvenchobbik.Size = new System.Drawing.Size(120, 175);
             this.listBox_kedvenchobbik.TabIndex = 10;
+            this.listBox_kedvenchobbik.SelectedValueChanged += new System.EventHandler(this.ListBox_kedvenchobbik_SelectedValueChanged);
             // 
             // button_hozzaad
             // 
@@ -157,6 +158,7 @@
             this.button_hozzaad.TabIndex = 11;
             this.button_hozzaad.Text = "Hozzáad";
             this.button_hozzaad.UseVisualStyleBackColor = true;
+            this.button_hozzaad.Click += new System.EventHandler(this.Button_hozzaad_Click);
             // 
             // button_mentes
             // 
@@ -167,6 +169,7 @@
             this.button_mentes.TabIndex = 12;
             this.button_mentes.Text = "Mentés";
             this.button_mentes.UseVisualStyleBackColor = true;
+            this.button_mentes.Click += new System.EventHandler(this.Button_mentes_Click);
             // 
             // button_betoltes
             // 
@@ -208,6 +211,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Regisztráció";
             this.ResumeLayout(false);
             this.PerformLayout();
