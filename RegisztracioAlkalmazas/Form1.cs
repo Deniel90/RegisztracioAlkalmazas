@@ -16,19 +16,5 @@ namespace RegisztracioAlkalmazas
         {
             InitializeComponent();
         }
-
-        private void Button_hozzaad_Click(object sender, EventArgs e)
-        {
-            string ujhobbi = textBox_ujhobbi.Text;
-            if (!listBox_kedvenchobbik.Items.Contains(ujhobbi))
-            {
-                listBox_kedvenchobbik.Items.Add(ujhobbi);
-            }
-        }
-
-        private void ListBox_kedvenchobbik_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

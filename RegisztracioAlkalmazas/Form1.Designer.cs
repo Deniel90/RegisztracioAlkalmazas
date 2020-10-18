@@ -147,7 +147,6 @@
             this.listBox_kedvenchobbik.Name = "listBox_kedvenchobbik";
             this.listBox_kedvenchobbik.Size = new System.Drawing.Size(120, 175);
             this.listBox_kedvenchobbik.TabIndex = 10;
-            this.listBox_kedvenchobbik.SelectedIndexChanged += new System.EventHandler(this.ListBox_kedvenchobbik_SelectedIndexChanged);
             // 
             // button_hozzaad
             // 
@@ -158,7 +157,6 @@
             this.button_hozzaad.TabIndex = 11;
             this.button_hozzaad.Text = "Hozzáad";
             this.button_hozzaad.UseVisualStyleBackColor = true;
-            this.button_hozzaad.Click += new System.EventHandler(this.Button_hozzaad_Click);
             // 
             // button_mentes
             // 
