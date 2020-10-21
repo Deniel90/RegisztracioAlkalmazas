@@ -43,6 +43,7 @@
             this.button_betoltes = new System.Windows.Forms.Button();
             this.dateTimePicker_szuldatum = new System.Windows.Forms.DateTimePicker();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label_nev
@@ -181,10 +182,13 @@
             this.button_betoltes.TabIndex = 13;
             this.button_betoltes.Text = "Betöltés";
             this.button_betoltes.UseVisualStyleBackColor = true;
+            this.button_betoltes.Click += new System.EventHandler(this.Button_betoltes_Click);
             // 
             // dateTimePicker_szuldatum
             // 
+            this.dateTimePicker_szuldatum.CustomFormat = "yyyy.MM.dd.";
             this.dateTimePicker_szuldatum.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.dateTimePicker_szuldatum.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker_szuldatum.Location = new System.Drawing.Point(136, 58);
             this.dateTimePicker_szuldatum.Name = "dateTimePicker_szuldatum";
             this.dateTimePicker_szuldatum.Size = new System.Drawing.Size(218, 26);
@@ -197,6 +201,10 @@
             this.saveFileDialog1.FileName = "regisztracio";
             this.saveFileDialog1.Filter = "Szövegfájl (*.txt)|*.txt|Minde fájl (*.*)|*.*";
             this.saveFileDialog1.RestoreDirectory = true;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "Szövegfájl (*.txt) |*.txt|Minden fájl (*.*)|*.*";
             // 
             // Form1
             // 
@@ -244,6 +252,7 @@
         private System.Windows.Forms.Button button_betoltes;
         private System.Windows.Forms.DateTimePicker dateTimePicker_szuldatum;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

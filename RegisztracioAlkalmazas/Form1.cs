@@ -27,6 +27,7 @@ namespace RegisztracioAlkalmazas
             if (!String.IsNullOrEmpty(ujhobbi) && !listBox_kedvenchobbik.Items.Contains(ujhobbi))
             {
                 listBox_kedvenchobbik.Items.Add(ujhobbi);
+                textBox_ujhobbi.Clear();
             }
         }
 
@@ -91,11 +92,13 @@ namespace RegisztracioAlkalmazas
                     hobbik[i] = listBox_kedvenchobbik.Items[i].ToString();
                 }
 
-                Ember ember = new Ember(textBox_nev.Text, dateTimePicker_szuldatum.Value.Date, nem, hobbik, listBox_kedvenchobbik.SelectedItem.ToString());
+                Ember ember = new Ember(textBox_nev.Text, dateTimePicker_szuldatum.Value.Date, nem, hobbik, listBox_kedvenchobbik.SelectedIndex.ToString());
 
+                //mentés
                 DialogResult visszajelzes = saveFileDialog1.ShowDialog();
                 if (visszajelzes != DialogResult.OK)
                 {
+                    MessageBox.Show("Az űrlapadatok nem lettek elmentve");
                     return;
                 }
                 StreamWriter sw = new StreamWriter(saveFileDialog1.FileName);
@@ -109,17 +112,48 @@ namespace RegisztracioAlkalmazas
                 MessageBox.Show(hibauzenet, "Hiányzó adatok!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void Button_betoltes_Click(object sender, EventArgs e)
+        {
+            DialogResult visszajelzes = openFileDialog1.ShowDialog();
+            if (visszajelzes != DialogResult.OK)
+            {
+                MessageBox.Show("Nincs fájl kiválasztva!");
+                return;
+            }
+            StreamReader sr = new StreamReader(openFileDialog1.FileName);
+            listBox_kedvenchobbik.Items.Clear();
+            string[] betoltott;
+            while (!sr.EndOfStream)
+            {
+                betoltott = sr.ReadLine().Split(';');
+
+                //név
+                textBox_nev.Text = betoltott[0];
+
+                //születési dátum
+                dateTimePicker_szuldatum.Value = Convert.ToDateTime(betoltott[1]);
+
+                //nem
+                if (betoltott[2] == "férfi")
+                {
+                    radio_F.Checked = true;
+                }
+                else
+                {
+                    radio_N.Checked = true;
+                }
+
+                //hobbik
+                string[] betoltotthobbik = betoltott[4].Split('-');
+                foreach (string elem in betoltotthobbik)
+                {
+                    listBox_kedvenchobbik.Items.Add(elem);
+                }
+
+                //kedvenc hobbi
+                listBox_kedvenchobbik.SelectedIndex = int.Parse(betoltott[3]) - 1;
+            }
+        }
     }
 }
-/*
- Mentés gomb
-c.) Betöltés gomb
- A gombra kattintva nyíljon meg 1 openFileDialog, amivel ki lehessen választani 1
-szöveges állományt
- A kiválasztott fájl tartalma alapján töltse újra a formot.
- A lista visszatöltésekor az alábbi dolgokra figyeljen:
-o Újratöltés előtt ürítse a listát
-o Először töltse fel a teljes listát a fájlból beolvasott hobbikkal
-o A betöltés után válassza ki a kedvenc hobbi a fájlból beolvasott érték alapján.
-     
-     */
