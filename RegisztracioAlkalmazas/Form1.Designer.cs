@@ -42,6 +42,7 @@
             this.button_mentes = new System.Windows.Forms.Button();
             this.button_betoltes = new System.Windows.Forms.Button();
             this.dateTimePicker_szuldatum = new System.Windows.Forms.DateTimePicker();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.SuspendLayout();
             // 
             // label_nev
@@ -188,6 +189,14 @@
             this.dateTimePicker_szuldatum.Name = "dateTimePicker_szuldatum";
             this.dateTimePicker_szuldatum.Size = new System.Drawing.Size(218, 26);
             this.dateTimePicker_szuldatum.TabIndex = 14;
+            this.dateTimePicker_szuldatum.Value = new System.DateTime(2020, 10, 18, 0, 0, 0, 0);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "txt";
+            this.saveFileDialog1.FileName = "regisztracio";
+            this.saveFileDialog1.Filter = "Szövegfájl (*.txt)|*.txt|Minde fájl (*.*)|*.*";
+            this.saveFileDialog1.RestoreDirectory = true;
             // 
             // Form1
             // 
@@ -234,6 +243,7 @@
         private System.Windows.Forms.Button button_mentes;
         private System.Windows.Forms.Button button_betoltes;
         private System.Windows.Forms.DateTimePicker dateTimePicker_szuldatum;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

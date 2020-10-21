@@ -14,6 +14,7 @@ namespace RegisztracioAlkalmazas
     public partial class Form1 : Form
     {
         private DateTime ma = DateTime.Now;
+        private string nem = "";
 
         public Form1()
         {
@@ -23,7 +24,7 @@ namespace RegisztracioAlkalmazas
         private void Button_hozzaad_Click(object sender, EventArgs e)
         {
             string ujhobbi = textBox_ujhobbi.Text.Trim();
-            if (ujhobbi != "" && !listBox_kedvenchobbik.Items.Contains(ujhobbi))
+            if (!String.IsNullOrEmpty(ujhobbi) && !listBox_kedvenchobbik.Items.Contains(ujhobbi))
             {
                 listBox_kedvenchobbik.Items.Add(ujhobbi);
             }
@@ -31,17 +32,21 @@ namespace RegisztracioAlkalmazas
 
         private void ListBox_kedvenchobbik_SelectedValueChanged(object sender, EventArgs e)
         {
-            textBox_ujhobbi.Text = listBox_kedvenchobbik.SelectedItem.ToString();
+            if (listBox_kedvenchobbik.SelectedItem != null)
+            {
+                textBox_ujhobbi.Text = listBox_kedvenchobbik.SelectedItem.ToString();
+            }
         }
 
         private void Button_mentes_Click(object sender, EventArgs e)
         {
-            int kitoltve = 3;
+            int kitoltve = 4;
+            string hibauzenet = "";
 
             //név
-            if (textBox_nev.Text.Trim() == "")
+            if (String.IsNullOrEmpty(textBox_nev.Text.Trim()))
             {
-                MessageBox.Show("A név kitöltése kötelező!", "Hiányzó adat!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                hibauzenet += "A név kitöltése kötelező!\n";
                 textBox_nev.Focus();
                 kitoltve--;
             }
@@ -49,38 +54,65 @@ namespace RegisztracioAlkalmazas
             //dátum
             if (dateTimePicker_szuldatum.Value.Date > ma.Date)
             {
-                MessageBox.Show("A dátum csak korábbi dátum lehet!", "Hibás dátum!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                hibauzenet += "A dátum csak korábbi dátum lehet!\n";
                 dateTimePicker_szuldatum.Focus();
                 kitoltve--;
             }
 
             //nem
-            if (true)
+            if (radio_F.Checked)
             {
-
+                nem = "férfi";
+            }
+            else if (radio_N.Checked)
+            {
+                nem = "nő";
+            }
+            else
+            {
+                hibauzenet += "A nem kiválasztása kötelező!\n";
+                kitoltve--;
             }
 
-            //validálás
-            if (kitoltve != 3)
+            //kedvenc hobbi
+            if (listBox_kedvenchobbik.SelectedIndex < 0)
             {
+                hibauzenet += "Ki kell jelölni egy kedvenc hobbit!";
+                kitoltve--;
+            }
+            
+            //validálás
+            if (kitoltve == 4)
+            {
+                string[] hobbik = new string[listBox_kedvenchobbik.Items.Count];
+                
+                for (int i = 0; i < hobbik.Length; i++)
+                {
+                    hobbik[i] = listBox_kedvenchobbik.Items[i].ToString();
+                }
 
+                Ember ember = new Ember(textBox_nev.Text, dateTimePicker_szuldatum.Value.Date, nem, hobbik, listBox_kedvenchobbik.SelectedItem.ToString());
+
+                DialogResult visszajelzes = saveFileDialog1.ShowDialog();
+                if (visszajelzes != DialogResult.OK)
+                {
+                    return;
+                }
+                StreamWriter sw = new StreamWriter(saveFileDialog1.FileName);
+                sw.WriteLine("{0};{1};{2};{3};{4}", ember.Nev, ember.Szuldatum, ember.Nem, ember.KedvencHobbi, String.Join("-", ember.Hobbik));
+                sw.Close();
+
+                MessageBox.Show("A fájl elmentve");
+            }
+            else
+            {
+                MessageBox.Show(hibauzenet, "Hiányzó adatok!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
 }
 /*
  Mentés gomb
- A gombra kattintva mentse el a form tartalmát egy szövegfájlba úgy, hogy az
-visszatölthető legyen. A fájlt egy saveFileDialog-al lehessen kiválasztani.
- Mentés előtt ellenőrizze, hogy minden mező ki legyen töltve:
-o A név szövegdoboz tartalmazzon szóköztől különböző karaktert
-o A születési dátum egy érvényes dátumot tartalmazzon, ami ne mutathasson az
-aktuális dátumnál későbbi időpontra
-
-o Legyen kiválasztva nem
-o A kedvenc hobbi legyen kiválasztva a hobbi listából. (SelectedIndex
-tulajdonság ne legyen -1)
- Mentésnél figyeljen, hogy a hobbi lista teljes tartalmát mentse el.
 c.) Betöltés gomb
  A gombra kattintva nyíljon meg 1 openFileDialog, amivel ki lehessen választani 1
 szöveges állományt
